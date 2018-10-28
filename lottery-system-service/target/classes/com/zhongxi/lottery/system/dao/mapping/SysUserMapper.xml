@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhongxi.lottery.service.system.dao.SysUserMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.zhongxi.lottery.service.system.model.SysUser">
+		<id column="id" property="id" />
+		<result column="account" property="account" />
+		<result column="password" property="password" />
+		<result column="salt" property="salt" />
+		<result column="real_name" property="realName" />
+		<result column="sex" property="sex" />
+		<result column="birthday" property="birthday" />
+		<result column="avatar" property="avatar" />
+		<result column="email" property="email" />
+		<result column="phone" property="phone" />
+		<result column="dept_id" property="deptId" />
+		<result column="role_id" property="roleId" />
+		<result column="status" property="status" />
+		<result column="create_time" property="createTime" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		id, account, real_name, sex, birthday, avatar, email, phone, dept_id, role_id, status, create_time
+	</sql>
+
+	<sql id="Base_Column_List_With_Pwd">
+		id, account, password, salt, real_name, sex, birthday, avatar, email, phone, dept_id, role_id, status, create_time
+	</sql>
+
+	<select id="selectUsers" resultType="map">
+		select
+		<include refid="Base_Column_List" />
+		from sys_user
+		where status != 3
+		<if test="name != null and name != ''">
+			and (phone like concat('%',#{name},'%')
+			or account like concat('%',#{name},'%')
+			or real_name like concat('%',#{name},'%'))
+		</if>
+		<if test="deptId != null and deptId != 0">
+			and (dept_id = #{deptId} or dept_id in ( select id from sys_dept where pids like concat('%[', #{deptId}, ']%') ))
+		</if>
+		<if test="beginTime != null and beginTime != '' and endTime != null and endTime != ''">
+			and (create_time between concat(#{beginTime},' 00:00:00') and concat(#{endTime},' 23:59:59'))
+		</if>
+	</select>
+
+	<update id="updateStatus">
+		update sys_user set status = #{status} where id = #{userId}
+	</update>
+
+	<update id="updatePwd">
+		update sys_user set password = #{pwd} where id = #{userId}
+	</update>
+
+	<update id="updateRoles">
+		update sys_user set role_id = #{roleIds} where id = #{userId}
+	</update>
+
+	<select id="getByAccount" resultType="SysUser">
+		select
+		<include refid="Base_Column_List_With_Pwd" />
+		from sys_user where account = #{account} and status != 3
+	</select>
+
+</mapper>

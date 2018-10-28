@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhongxi.lottery.service.system.dao.SysRoleMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.zhongxi.lottery.service.system.model.SysRole">
+		<id column="id" property="id" />
+		<result column="serial_number" property="serialNumber" />
+		<result column="pid" property="pid" />
+		<result column="role_name" property="roleName" />
+		<result column="dept_id" property="deptId" />
+		<result column="remark" property="remark" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		id, serial_number, pid, role_name, dept_id, remark
+	</sql>
+
+	<select id="selectRoles" resultType="map">
+		select
+		<include refid="Base_Column_List" />
+		from sys_role
+		<if test="condition != null">
+			where role_name like CONCAT('%',#{condition},'%')
+		</if>
+	</select>
+
+	<select id="getRoleTreeList" resultType="com.zhongxi.lottery.common.node.ZTreeNode">
+		select id as id,pid as parentId,role_name as name,
+		(
+		case when (parentId=0 or parentId is null) then 
+		'true'
+		else 
+		'false' 
+		end
+		) as isOpen from sys_role
+	</select>
+
+	<select id="getRoleTreeListByRoleId" resultType="com.zhongxi.lottery.common.node.ZTreeNode">
+		select
+		r.id as id,
+		pid as parentId,
+		role_name as name,
+		(
+		case
+		when (parentId = 0 OR parentId is null) then
+		'true'
+		else
+		'false'
+		end
+		) as isOpen,
+		(
+		case
+		when (r1.id = 0 or r1.id is null) then
+		'false'
+		else
+		'true'
+		end
+		) as checked
+		from 
+		sys_role r
+		left join (
+		select
+		id
+		from
+		sys_role
+		where
+		id in
+		<foreach collection="array" index="index" item="i" open="(" separator="," close=")">
+			#{i}
+		</foreach>
+		) r1 on r.id = r1.id
+		order by r.parentId,r.serial_number asc
+	</select>
+</mapper>

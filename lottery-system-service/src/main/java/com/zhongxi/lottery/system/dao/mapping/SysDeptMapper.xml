@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhongxi.lottery.service.system.dao.SysDeptMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.zhongxi.lottery.service.system.model.SysDept">
+        <id column="id" property="id"/>
+        <result column="serial_number" property="serialNumber"/>
+        <result column="pid" property="pid"/>
+        <result column="pids" property="pids"/>
+        <result column="simple_name" property="simpleName"/>
+        <result column="full_name" property="fullName"/>
+        <result column="remark" property="remark"/>
+    </resultMap>
+
+    <select id="getDeptTreeList" resultType="com.zhongxi.lottery.common.node.ZTreeNode">
+		select id as id,pid as parentId,simple_name as name,
+		(
+		case
+		when (parentId = 0 OR parentId is null) then
+		'true'
+		else
+		'false'
+		end
+		) as isOpen from sys_dept
+	</select>
+ 
+ 
+    <select id="selectDepts" resultType="map">
+        select * from sys_dept
+        <if test="condition != null and condition != ''">
+            where simple_name like concat('%',#{condition},'%') or full_name like concat('%',#{condition},'%')
+        </if>
+        order by serial_number asc
+    </select>
+
+</mapper>

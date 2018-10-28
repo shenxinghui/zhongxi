@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhongxi.lottery.service.system.dao.SysDictMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.zhongxi.lottery.service.system.model.SysDict">
+        <id column="id" property="id"/>
+        <result column="serial_number" property="serialNumber"/>
+        <result column="pid" property="pid"/>
+        <result column="dict_name" property="dictName"/>
+        <result column="remark" property="remark"/>
+    </resultMap>
+
+    <select id="selectDicts" resultType="map">
+        select * from sys_dict
+        where pid = 0
+        <if test="condition != null and condition != ''">
+            and dict_name like concat('%',#{condition},'%')
+        </if>
+        order by id asc
+    </select>
+
+</mapper>

@@ -1,0 +1,35 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  
+  <parent>
+  	<groupId>com.zhongxi.lottery</groupId>
+  	<artifactId>lottery-parent</artifactId>
+  	<version>0.0.1-SNAPSHOT</version>
+  </parent>
+  
+  <artifactId>lottery-system-service</artifactId>
+  <packaging>jar</packaging>
+
+  <name>lottery-system-service</name>
+  <description>彩票系统服务项目</description>
+  
+  <dependencies>
+  	  <dependency>
+          <groupId>com.zhongxi.lottery</groupId>
+          <artifactId>lottery-common</artifactId>
+          <version>0.0.1-SNAPSHOT</version>
+      </dependency>
+	  
+	  <!-- mybatis -->
+      <dependency>
+          <groupId>com.baomidou</groupId>
+          <artifactId>mybatis-plus</artifactId>
+      </dependency>
+      <dependency>
+          <groupId>com.baomidou</groupId>
+          <artifactId>mybatisplus-spring-boot-starter</artifactId>
+      </dependency>
+       
+  </dependencies>
+</project>
