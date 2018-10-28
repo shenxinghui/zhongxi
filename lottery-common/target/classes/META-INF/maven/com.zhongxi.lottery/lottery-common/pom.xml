@@ -1,0 +1,65 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  
+  <parent>
+  	<groupId>com.zhongxi.lottery</groupId>
+  	<artifactId>lottery-parent</artifactId>
+  	<version>0.0.1-SNAPSHOT</version>
+  </parent>
+  
+  <artifactId>lottery-common</artifactId>
+  <packaging>jar</packaging>
+
+  <name>lottery-common</name>
+  <description>彩票公共项目</description>
+
+  <dependencies>
+  	  <!--spring boot依赖-->
+      <dependency>
+         <groupId>org.springframework.boot</groupId>
+         <artifactId>spring-boot-starter-aop</artifactId>
+      </dependency>
+      <dependency>
+         <groupId>org.springframework.boot</groupId>
+         <artifactId>spring-boot-starter-web</artifactId>
+      </dependency>
+      <dependency>
+         <groupId>org.springframework.boot</groupId>
+         <artifactId>spring-boot-starter-jdbc</artifactId>
+      </dependency>
+      
+      <!-- jdbc -->
+      <dependency>
+         <groupId>com.alibaba</groupId>
+         <artifactId>druid</artifactId>
+      </dependency>
+      
+      <!-- mybatis -->
+  	  <dependency>
+          <groupId>com.baomidou</groupId>
+          <artifactId>mybatis-plus</artifactId>
+      </dependency>
+      
+      <!-- utils -->
+      <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+      </dependency>
+      <dependency>
+          <groupId>org.apache.commons</groupId>
+          <artifactId>commons-lang3</artifactId>
+      </dependency>
+      <dependency>
+         <groupId>com.github.penggle</groupId>
+         <artifactId>kaptcha</artifactId>
+      </dependency>
+      
+       <!--web-->
+       <dependency>
+           <groupId>javax.servlet</groupId>
+           <artifactId>javax.servlet-api</artifactId>
+           <scope>provided</scope>
+       </dependency>
+  </dependencies>
+</project>
